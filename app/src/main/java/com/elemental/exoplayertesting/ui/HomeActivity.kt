@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -13,18 +12,23 @@ import com.elemental.exoplayertesting.Adapter.HomeAdapter
 import com.elemental.exoplayertesting.R
 import com.elemental.exoplayertesting.Utils.Const
 import com.elemental.exoplayertesting.Utils.DataLoadState
-import com.elemental.exoplayertesting.ViewModel.HomeViewModel
-import com.elemental.exoplayertesting.ViewModel.HomeViewModelFactory
+import com.elemental.exoplayertesting.ViewModel.Home.HomeViewModel
+import com.elemental.exoplayertesting.ViewModel.Home.HomeViewModelFactory
+import com.elemental.exoplayertesting.ViewModel.Lesson.LessonViewModel
+import com.elemental.exoplayertesting.ViewModel.Lesson.LessonViewModelFactory
+import com.elemental.exoplayertesting.data.Lesson
 import com.elemental.exoplayertesting.data.Video
-import com.elemental.exoplayertesting.repository.HomeRepositoryImpl
-import com.google.android.material.snackbar.Snackbar
+import com.elemental.exoplayertesting.repository.HomeRepository.HomeRepositoryImpl
+import com.elemental.exoplayertesting.repository.LessonRepository.LessonRepositoryImpl
 import kotlinx.android.synthetic.main.activity_home.*
 
 class HomeActivity : AppCompatActivity(), HomeAdapter.OnItemClickedListener{
-    private lateinit var viewModel:HomeViewModel
+    private lateinit var viewModel: HomeViewModel
+    private lateinit var lessonViewModel: LessonViewModel
 
     private lateinit var homeAdapter: HomeAdapter
     private val videos: MutableList<Video> = ArrayList()
+    private val lessons:MutableList<Lesson> =ArrayList()
 
     override fun onItemClicked(video: Video) {
         val intent=Intent(this,MainActivity::class.java)
@@ -38,9 +42,24 @@ class HomeActivity : AppCompatActivity(), HomeAdapter.OnItemClickedListener{
         homeAdapter= HomeAdapter(videos,this)
 
         progress_circular.visibility= View.VISIBLE
-        viewModel = ViewModelProviders.of(this,HomeViewModelFactory(HomeRepositoryImpl(this))).get(HomeViewModel::class.java)
+        viewModel = ViewModelProviders.of(this,
+            HomeViewModelFactory(
+                HomeRepositoryImpl(this)
+            )
+        ).get(HomeViewModel::class.java)
 
+        lessonViewModel = ViewModelProviders.of(this,
+            LessonViewModelFactory(
+                LessonRepositoryImpl(this)
+            )
+        ).get(LessonViewModel::class.java)
         viewModel.loadApi()
+        lessonViewModel.loadLessons()
+
+        lessonViewModel.getLessons().observe(this, Observer {
+            lessons.addAll(it)
+            Log.d("lessons",lessons.toString())
+        })
 
         home_recycler.apply {
             layoutManager=LinearLayoutManager(applicationContext)

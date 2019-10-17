@@ -1,4 +1,4 @@
-package com.elemental.exoplayertesting.repository
+package com.elemental.exoplayertesting.repository.HomeRepository
 
 import android.content.Context
 import android.util.Log
@@ -14,7 +14,8 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext
 
-class HomeRepositoryImpl(context: Context) : HomeRepository {
+class HomeRepositoryImpl(context: Context) :
+    HomeRepository {
     private val mJob: Job = Job()
     private val dataLoadState: MutableLiveData<DataLoadState> = MutableLiveData()
     private val models: MutableLiveData<List<Video>> = MutableLiveData()

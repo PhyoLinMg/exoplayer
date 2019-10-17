@@ -3,6 +3,7 @@ package com.elemental.atantat.network.services
 
 import com.elemental.atantat.network.ConnectivityInterceptor
 import com.elemental.exoplayertesting.Utils.Const
+import com.elemental.exoplayertesting.data.Lessons
 import com.elemental.exoplayertesting.data.Videos
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import kotlinx.coroutines.Deferred
@@ -19,6 +20,8 @@ interface MainService{
     @GET("demo/video/list/samples.json")
     fun fetchVideos(): Deferred<Response<Videos>>
 
+    @GET("lessonapi")
+    fun fetchLessons():Deferred<Response<Lessons>>
 
     companion object {
        operator fun invoke(
@@ -41,7 +44,7 @@ interface MainService{
 
 
            return Retrofit.Builder()
-               .baseUrl(Const.ONLINE_API_END)
+               .baseUrl(Const.LOCAL_API_END)
                .addConverterFactory(GsonConverterFactory.create())
                .addCallAdapterFactory(CoroutineCallAdapterFactory())
                .client(okHttpClient)

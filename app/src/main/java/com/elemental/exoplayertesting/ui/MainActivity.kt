@@ -30,6 +30,7 @@ class MainActivity : AppCompatActivity() {
 //        val uriList = arrayOf<Uri>(uri,uri1,uri2)
         playVideo(uri)
 
+
     }
     private fun playVideo(uri: Uri){
         //Here the videoView is

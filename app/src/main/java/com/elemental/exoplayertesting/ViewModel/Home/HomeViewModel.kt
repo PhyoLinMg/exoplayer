@@ -1,10 +1,10 @@
-package com.elemental.exoplayertesting.ViewModel
+package com.elemental.exoplayertesting.ViewModel.Home
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.elemental.exoplayertesting.Utils.DataLoadState
 import com.elemental.exoplayertesting.data.Video
-import com.elemental.exoplayertesting.repository.HomeRepository
+import com.elemental.exoplayertesting.repository.HomeRepository.HomeRepository
 
 class HomeViewModel(private val homeRepository: HomeRepository):ViewModel() {
     fun loadApi(){

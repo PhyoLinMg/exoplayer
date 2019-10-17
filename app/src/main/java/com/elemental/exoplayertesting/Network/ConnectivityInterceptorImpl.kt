@@ -10,8 +10,8 @@ import okhttp3.Response
 class ConnectivityInterceptorImpl(context: Context): ConnectivityInterceptor {
     private val appContext = context.applicationContext
     override fun intercept(chain: Interceptor.Chain): Response {
-        if(!isOnline())
-            throw NoConnectivityException()
+//        if(!isOnline())
+//            throw NoConnectivityException()
         return chain.proceed(chain.request())
     }
     private fun isOnline(): Boolean {

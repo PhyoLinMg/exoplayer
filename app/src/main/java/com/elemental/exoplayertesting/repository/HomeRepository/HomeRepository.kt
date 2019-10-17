@@ -1,4 +1,4 @@
-package com.elemental.exoplayertesting.repository
+package com.elemental.exoplayertesting.repository.HomeRepository
 
 import androidx.lifecycle.LiveData
 import com.elemental.exoplayertesting.Utils.DataLoadState
